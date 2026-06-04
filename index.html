@@ -6,49 +6,31 @@
 <title>Trading Solutions · Operations Dashboard</title>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-body{background:#0a1224;color:#e8ecf5;font-family:"Inter",system-ui,sans-serif;min-height:100vh}
+*{box-sizing:border-box;margin:0;padding:0}body{background:#0a1224;color:#e8ecf5;font-family:system-ui,sans-serif;min-height:100vh}
 :root{--bg:#0a1224;--card:#121d36;--card2:#1a2744;--border:#2a3a5c;--text:#e8ecf5;--muted:#8497b8;--accent:#14b8a6;--accent2:#22d3ee;--ok:#22c55e;--warn:#fbbf24;--err:#f87171}
-a{color:var(--accent);text-decoration:none}
 .topbar{background:var(--card);border-bottom:1px solid var(--border);padding:0 2rem;display:flex;align-items:center;justify-content:space-between;height:56px}
-.topbar .logo{font-size:1.1rem;font-weight:700;color:var(--accent);letter-spacing:.5px}
-.topbar .sub{font-size:.75rem;color:var(--muted);margin-left:8px}
-nav{background:var(--card);border-bottom:1px solid var(--border);padding:0 2rem;display:flex;gap:0}
-nav button{background:none;border:none;color:var(--muted);padding:14px 20px;font-size:.85rem;cursor:pointer;border-bottom:2px solid transparent;transition:all .2s;letter-spacing:.3px}
-nav button:hover{color:var(--text)}
-nav button.active{color:var(--accent);border-bottom-color:var(--accent);font-weight:600}
-.page{display:none;padding:2rem;max-width:1400px;margin:0 auto}
-.page.active{display:block}
-h1{font-size:1.4rem;font-weight:700;margin-bottom:.25rem}
-h2{font-size:1.1rem;font-weight:600;margin-bottom:1rem;color:var(--text)}
-.subtitle{color:var(--muted);font-size:.85rem;margin-bottom:1.5rem}
+.topbar .logo{font-size:1.1rem;font-weight:700;color:var(--accent)}.topbar .sub{font-size:.75rem;color:var(--muted);margin-left:8px}
+nav{background:var(--card);border-bottom:1px solid var(--border);padding:0 2rem;display:flex}
+nav button{background:none;border:none;color:var(--muted);padding:14px 20px;font-size:.85rem;cursor:pointer;border-bottom:2px solid transparent;transition:all .2s}
+nav button:hover{color:var(--text)}nav button.active{color:var(--accent);border-bottom-color:var(--accent);font-weight:600}
+.page{display:none;padding:2rem;max-width:1400px;margin:0 auto}.page.active{display:block}
+h1{font-size:1.4rem;font-weight:700;margin-bottom:.25rem}.subtitle{color:var(--muted);font-size:.85rem;margin-bottom:1.5rem}
 .kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:1rem;margin-bottom:2rem}
-.kpi{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:1.2rem;}
+.kpi{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:1.2rem}
 .kpi .label{font-size:.75rem;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:.5rem}
-.kpi .val{font-size:1.8rem;font-weight:700;color:var(--accent)}
-.kpi .val.warn{color:var(--warn)}
-.kpi .val.err{color:var(--err)}
-.kpi .val.ok{color:var(--ok)}
-.grid2{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-bottom:2rem}
-.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1.5rem;margin-bottom:2rem}
-@media(max-width:900px){.grid2,.grid3{grid-template-columns:1fr}}
-.card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:1.5rem}
-.card h3{font-size:.9rem;font-weight:600;margin-bottom:1rem;color:var(--muted);text-transform:uppercase;letter-spacing:.5px}
+.kpi .val{font-size:1.8rem;font-weight:700;color:var(--accent)}.kpi .val.warn{color:var(--warn)}.kpi .val.err{color:var(--err)}.kpi .val.ok{color:var(--ok)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-bottom:2rem}@media(max-width:900px){.grid2{grid-template-columns:1fr}}
+.card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:1.5rem}.card h3{font-size:.9rem;font-weight:600;margin-bottom:1rem;color:var(--muted);text-transform:uppercase;letter-spacing:.5px}
 .chart-wrap{position:relative;height:220px}
 .btn{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:6px;border:none;cursor:pointer;font-size:.85rem;font-weight:500;transition:all .15s}
-.btn-primary{background:var(--accent);color:#0a1224}
-.btn-primary:hover{background:#0ea895}
-.btn-danger{background:transparent;color:var(--err);border:1px solid var(--err)}
-.btn-danger:hover{background:var(--err);color:#fff}
+.btn-primary{background:var(--accent);color:#0a1224}.btn-primary:hover{background:#0ea895}
+.btn-danger{background:transparent;color:var(--err);border:1px solid var(--err)}.btn-danger:hover{background:var(--err);color:#fff}
 .btn-sm{padding:4px 10px;font-size:.78rem}
 .toolbar{display:flex;gap:.75rem;flex-wrap:wrap;margin-bottom:1.25rem;align-items:center}
 .toolbar select,.toolbar input[type=text]{background:var(--card2);border:1px solid var(--border);color:var(--text);padding:7px 12px;border-radius:6px;font-size:.83rem;min-width:150px}
-.toolbar select:focus,.toolbar input:focus{outline:none;border-color:var(--accent)}
-table{width:100%;border-collapse:collapse;font-size:.83rem}
-th{text-align:left;padding:10px 12px;color:var(--muted);font-weight:600;text-transform:uppercase;font-size:.72rem;letter-spacing:.5px;border-bottom:1px solid var(--border)}
-td{padding:10px 12px;border-bottom:1px solid rgba(42,58,92,.4);vertical-align:top}
-tr:hover td{background:rgba(26,39,68,.5)}
-.badge{display:inline-block;padding:2px 8px;border-radius:4px;font-size:.72rem;font-weight:600;letter-spacing:.3px}
+table{width:100%;border-collapse:collapse;font-size:.83rem}th{text-align:left;padding:10px 12px;color:var(--muted);font-weight:600;text-transform:uppercase;font-size:.72rem;letter-spacing:.5px;border-bottom:1px solid var(--border)}
+td{padding:10px 12px;border-bottom:1px solid rgba(42,58,92,.4);vertical-align:top}tr:hover td{background:rgba(26,39,68,.5)}
+.badge{display:inline-block;padding:2px 8px;border-radius:4px;font-size:.72rem;font-weight:600}
 .b-crit{background:rgba(248,113,113,.15);color:#f87171;border:1px solid rgba(248,113,113,.3)}
 .b-high{background:rgba(251,191,36,.15);color:#fbbf24;border:1px solid rgba(251,191,36,.3)}
 .b-med{background:rgba(20,184,166,.15);color:#14b8a6;border:1px solid rgba(20,184,166,.3)}
@@ -63,453 +45,67 @@ tr:hover td{background:rgba(26,39,68,.5)}
 .b-wb{background:rgba(34,211,238,.15);color:#22d3ee;border:1px solid rgba(34,211,238,.3)}
 .b-both{background:rgba(251,191,36,.15);color:#fbbf24;border:1px solid rgba(251,191,36,.3)}
 .empty{text-align:center;padding:3rem;color:var(--muted);font-size:.9rem}
-.modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:100;align-items:center;justify-content:center}
-.modal-bg.open{display:flex}
+.modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:100;align-items:center;justify-content:center}.modal-bg.open{display:flex}
 .modal{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:2rem;width:90%;max-width:680px;max-height:90vh;overflow-y:auto}
-.modal h2{font-size:1.1rem;margin-bottom:1.5rem}
-.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
-.form-grid.single{grid-template-columns:1fr}
-.form-group{display:flex;flex-direction:column;gap:5px}
-.form-group.span2{grid-column:span 2}
-label{font-size:.78rem;color:var(--muted);font-weight:500}
-input,select,textarea{background:var(--card2);border:1px solid var(--border);color:var(--text);padding:8px 12px;border-radius:6px;font-size:.85rem;width:100%;font-family:inherit}
-input:focus,select:focus,textarea:focus{outline:none;border-color:var(--accent)}
-textarea{resize:vertical;min-height:70px}
-.form-actions{display:flex;gap:.75rem;justify-content:flex-end;margin-top:1.5rem}
-.trend-sel{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:1rem}
-.trend-sel button{background:var(--card2);border:1px solid var(--border);color:var(--muted);padding:5px 12px;border-radius:20px;font-size:.78rem;cursor:pointer}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}.form-group{display:flex;flex-direction:column;gap:5px}.form-group.span2{grid-column:span 2}
+label{font-size:.78rem;color:var(--muted);font-weight:500}input,select,textarea{background:var(--card2);border:1px solid var(--border);color:var(--text);padding:8px 12px;border-radius:6px;font-size:.85rem;width:100%;font-family:inherit}
+textarea{resize:vertical;min-height:70px}.form-actions{display:flex;gap:.75rem;justify-content:flex-end;margin-top:1.5rem}
+.trend-sel{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:1rem}.trend-sel button{background:var(--card2);border:1px solid var(--border);color:var(--muted);padding:5px 12px;border-radius:20px;font-size:.78rem;cursor:pointer}
 .trend-sel button.active{background:var(--accent);color:#0a1224;border-color:var(--accent);font-weight:600}
 .client-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1rem}
-.client-card{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:1rem}
-.client-card .name{font-weight:600;font-size:.9rem;margin-bottom:.5rem;color:var(--text)}
-.client-card .stats{display:flex;gap:.75rem;flex-wrap:wrap}
-.client-card .stat{font-size:.75rem;color:var(--muted)}
-.client-card .stat span{font-weight:700;color:var(--text)}
+.client-card{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:1rem}.client-card .name{font-weight:600;font-size:.9rem;margin-bottom:.5rem}
+.client-card .stats{display:flex;gap:.75rem;flex-wrap:wrap}.client-card .stat{font-size:.75rem;color:var(--muted)}.client-card .stat span{font-weight:700;color:var(--text)}
 .search-bar{background:var(--card2);border:1px solid var(--border);color:var(--text);padding:8px 14px;border-radius:6px;font-size:.85rem;width:300px;margin-bottom:1rem}
-.search-bar:focus{outline:none;border-color:var(--accent)}
-</style>
-</head>
-<body>
+</style></head><body>
 <div class="topbar"><div style="display:flex;align-items:center"><span class="logo">Trading Solutions</span><span class="sub">Operations Dashboard</span></div><div style="font-size:.78rem;color:var(--muted)" id="last-saved">No data saved yet</div></div>
-<nav id="main-nav">
-<button data-page="overview" class="active">Overview</button>
-<button data-page="incidents">Incident Log</button>
-<button data-page="deliveries">Delivery Tracker</button>
-<button data-page="trends">Client Trends</button>
-<button data-page="clients">Client Directory</button>
-</nav>
-<div id="page-overview" class="page active">
-<h1>Operations Overview</h1><p class="subtitle">Key performance indicators and system health</p>
-<div class="kpi-grid" id="kpi-grid"></div>
-<div class="grid2">
-<div class="card"><h3>Incidents by Environment</h3><div class="chart-wrap"><canvas id="chart-env"></canvas></div></div>
-<div class="card"><h3>Incidents by Priority</h3><div class="chart-wrap"><canvas id="chart-pri"></canvas></div></div>
-</div>
-<div class="card"><h3>Monthly Incident Volume</h3><div class="chart-wrap" style="height:200px"><canvas id="chart-monthly"></canvas></div></div>
-</div>
-<div id="page-incidents" class="page">
-<h1>Incident Log</h1><p class="subtitle">Track and manage all client incidents</p>
-<div class="toolbar">
-<button class="btn btn-primary" id="btn-add-inc">+ Log Incident</button>
-<select id="fi-client"><option value="">All Clients</option></select>
-<select id="fi-env"><option value="">All Environments</option><option>Production</option><option>Whiteboard</option><option>Both</option></select>
-<select id="fi-status"><option value="">All Statuses</option><option>Open</option><option>In Progress</option><option>Resolved</option></select>
-<select id="fi-priority"><option value="">All Priorities</option><option>Critical</option><option>High</option><option>Medium</option><option>Low</option></select>
-<button class="btn btn-sm" id="btn-clear-ifilter" style="color:var(--muted);background:var(--card2);border:1px solid var(--border)">Clear Filters</button>
-</div>
-<div class="card" style="overflow-x:auto"><table><thead><tr><th>Date</th><th>Client</th><th>Env</th><th>Priority</th><th>Title</th><th>Status</th><th>Assigned To</th><th>MTTR (h)</th><th>Actions</th></tr></thead><tbody id="inc-tbody"></tbody></table></div>
-</div>
-<div id="page-deliveries" class="page">
-<h1>Delivery Tracker</h1><p class="subtitle">Track promises and delivery commitments to clients</p>
-<div class="toolbar">
-<button class="btn btn-primary" id="btn-add-del">+ Add Delivery</button>
-<select id="fd-client"><option value="">All Clients</option></select>
-<select id="fd-status"><option value="">All Statuses</option><option>Pending</option><option>In Progress</option><option>Delivered</option><option>Overdue</option></select>
-<input type="text" id="fd-search" placeholder="Search deliveries..." style="min-width:200px">
-<button class="btn btn-sm" id="btn-clear-dfilter" style="color:var(--muted);background:var(--card2);border:1px solid var(--border)">Clear Filters</button>
-</div>
-<div class="card" style="overflow-x:auto"><table><thead><tr><th>Client</th><th>Category</th><th>Title</th><th>Promised Date</th><th>Actual Date</th><th>Assigned To</th><th>Status</th><th>Actions</th></tr></thead><tbody id="del-tbody"></tbody></table></div>
-</div>
-<div id="page-trends" class="page">
-<h1>Client Trends</h1><p class="subtitle">Monitor incident trends per client over time</p>
-<div class="card" style="margin-bottom:1.5rem"><h3>Overall Incident Trend</h3><div class="chart-wrap"><canvas id="chart-overall"></canvas></div></div>
-<div class="card"><h3>View Trend for Client</h3>
-<div class="trend-sel" id="trend-sel"></div>
-<div class="chart-wrap"><canvas id="chart-client-trend"></canvas></div></div>
-</div>
-<div id="page-clients" class="page">
-<h1>Client Directory</h1><p class="subtitle">All clients and their incident summary</p>
-<input type="text" class="search-bar" id="client-search" placeholder="Search clients...">
-<div class="client-grid" id="client-grid"></div>
-</div>
-
-<!-- Incident Modal -->
-<div class="modal-bg" id="inc-modal">
-<div class="modal">
-<h2 id="inc-modal-title">Log New Incident</h2>
-<div class="form-grid">
-<div class="form-group"><label>Client *</label><select id="m-client"><option value="">Select client...</option></select></div>
-<div class="form-group"><label>Date &amp; Time *</label><input type="datetime-local" id="m-datetime"></div>
-<div class="form-group"><label>Environment *</label><select id="m-env"><option value="">Select...</option><option>Production</option><option>Whiteboard</option><option>Both</option></select></div>
-<div class="form-group"><label>Priority *</label><select id="m-priority"><option value="">Select...</option><option>Critical</option><option>High</option><option>Medium</option><option>Low</option></select></div>
-<div class="form-group span2"><label>Title *</label><input type="text" id="m-title" placeholder="Brief incident title"></div>
-<div class="form-group span2"><label>Description</label><textarea id="m-desc" placeholder="Detailed description of the incident..."></textarea></div>
-<div class="form-group"><label>System / Module</label><input type="text" id="m-system" placeholder="e.g. Trading Engine, API"></div>
-<div class="form-group"><label>Reporter</label><input type="text" id="m-reporter" placeholder="Who reported it"></div>
-<div class="form-group"><label>Assigned To</label><input type="text" id="m-assigned" placeholder="Who is handling it"></div>
-<div class="form-group"><label>Ticket Ref</label><input type="text" id="m-ticket" placeholder="e.g. JIRA-123"></div>
-<div class="form-group"><label>Status</label><select id="m-status"><option>Open</option><option>In Progress</option><option>Resolved</option></select></div>
-<div class="form-group"><label>Resolution Date</label><input type="date" id="m-resdate"></div>
-<div class="form-group span2"><label>Resolution Notes</label><textarea id="m-resnotes" placeholder="How was it resolved?"></textarea></div>
-<div class="form-group"><label>MTTR (hours)</label><input type="number" id="m-mttr" placeholder="0" min="0" step="0.5"></div>
-</div>
-<div class="form-actions"><button class="btn" id="btn-inc-cancel" style="background:var(--card2);border:1px solid var(--border);color:var(--text)">Cancel</button><button class="btn btn-primary" id="btn-inc-save">Save Incident</button></div>
-</div></div>
-
-<!-- Delivery Modal -->
-<div class="modal-bg" id="del-modal">
-<div class="modal">
-<h2 id="del-modal-title">Add Delivery Commitment</h2>
-<div class="form-grid">
-<div class="form-group"><label>Client *</label><select id="dm-client"><option value="">Select client...</option></select></div>
-<div class="form-group"><label>Category</label><select id="dm-category"><option>Feature</option><option>Bug Fix</option><option>Enhancement</option><option>Configuration</option><option>Integration</option><option>Reporting</option><option>Other</option></select></div>
-<div class="form-group span2"><label>Title *</label><input type="text" id="dm-title" placeholder="What was promised"></div>
-<div class="form-group span2"><label>Description</label><textarea id="dm-desc" placeholder="Details of the commitment..."></textarea></div>
-<div class="form-group"><label>Promised Date *</label><input type="date" id="dm-promised"></div>
-<div class="form-group"><label>Actual Delivery Date</label><input type="date" id="dm-actual"></div>
-<div class="form-group"><label>Assigned To</label><input type="text" id="dm-assigned" placeholder="Responsible person/team"></div>
-<div class="form-group"><label>Status</label><select id="dm-status"><option>Pending</option><option>In Progress</option><option>Delivered</option></select></div>
-<div class="form-group span2"><label>Notes</label><textarea id="dm-notes" placeholder="Additional notes..."></textarea></div>
-</div>
-<div class="form-actions"><button class="btn" id="btn-del-cancel" style="background:var(--card2);border:1px solid var(--border);color:var(--text)">Cancel</button><button class="btn btn-primary" id="btn-del-save">Save Delivery</button></div>
-</div></div>
-
+<nav id="main-nav"><button data-page="overview" class="active">Overview</button><button data-page="incidents">Incident Log</button><button data-page="deliveries">Delivery Tracker</button><button data-page="trends">Client Trends</button><button data-page="clients">Client Directory</button></nav>
+<div id="page-overview" class="page active"><h1>Operations Overview</h1><p class="subtitle">Key performance indicators and system health</p><div class="kpi-grid" id="kpi-grid"></div><div class="grid2"><div class="card"><h3>By Environment</h3><div class="chart-wrap"><canvas id="chart-env"></canvas></div></div><div class="card"><h3>By Priority</h3><div class="chart-wrap"><canvas id="chart-pri"></canvas></div></div></div><div class="card"><h3>Monthly Incident Volume</h3><div class="chart-wrap" style="height:200px"><canvas id="chart-monthly"></canvas></div></div></div>
+<div id="page-incidents" class="page"><h1>Incident Log</h1><p class="subtitle">Track and manage all client incidents</p><div class="toolbar"><button class="btn btn-primary" id="btn-add-inc">+ Log Incident</button><select id="fi-client"><option value="">All Clients</option></select><select id="fi-env"><option value="">All Environments</option><option>Production</option><option>Whiteboard</option><option>Both</option></select><select id="fi-status"><option value="">All Statuses</option><option>Open</option><option>In Progress</option><option>Resolved</option></select><select id="fi-priority"><option value="">All Priorities</option><option>Critical</option><option>High</option><option>Medium</option><option>Low</option></select><button class="btn btn-sm" id="btn-clear-if" style="color:var(--muted);background:var(--card2);border:1px solid var(--border)">Clear</button></div><div class="card" style="overflow-x:auto"><table><thead><tr><th>Date</th><th>Client</th><th>Env</th><th>Priority</th><th>Title</th><th>Status</th><th>Assigned</th><th>MTTR(h)</th><th>Act</th></tr></thead><tbody id="inc-tbody"></tbody></table></div></div>
+<div id="page-deliveries" class="page"><h1>Delivery Tracker</h1><p class="subtitle">Track promises and delivery commitments</p><div class="toolbar"><button class="btn btn-primary" id="btn-add-del">+ Add Delivery</button><select id="fd-client"><option value="">All Clients</option></select><select id="fd-status"><option value="">All Statuses</option><option>Pending</option><option>In Progress</option><option>Delivered</option><option>Overdue</option></select><input type="text" id="fd-search" placeholder="Search..." style="min-width:200px"><button class="btn btn-sm" id="btn-clear-df" style="color:var(--muted);background:var(--card2);border:1px solid var(--border)">Clear</button></div><div class="card" style="overflow-x:auto"><table><thead><tr><th>Client</th><th>Category</th><th>Title</th><th>Promised</th><th>Delivered</th><th>Assigned</th><th>Status</th><th>Act</th></tr></thead><tbody id="del-tbody"></tbody></table></div></div>
+<div id="page-trends" class="page"><h1>Client Trends</h1><p class="subtitle">Incident trends over time</p><div class="card" style="margin-bottom:1.5rem"><h3>Overall Trend</h3><div class="chart-wrap"><canvas id="chart-overall"></canvas></div></div><div class="card"><h3>Per Client</h3><div class="trend-sel" id="trend-sel"></div><div class="chart-wrap"><canvas id="chart-ct"></canvas></div></div></div>
+<div id="page-clients" class="page"><h1>Client Directory</h1><p class="subtitle">All clients and their summary</p><input type="text" class="search-bar" id="client-search" placeholder="Search clients..."><div class="client-grid" id="client-grid"></div></div>
+<div class="modal-bg" id="inc-modal"><div class="modal"><h2 id="inc-modal-title">Log New Incident</h2><div class="form-grid"><div class="form-group"><label>Client</label><select id="m-client"><option value="">Select...</option></select></div><div class="form-group"><label>Date &amp; Time</label><input type="datetime-local" id="m-datetime"></div><div class="form-group"><label>Environment</label><select id="m-env"><option value="">Select...</option><option>Production</option><option>Whiteboard</option><option>Both</option></select></div><div class="form-group"><label>Priority</label><select id="m-priority"><option value="">Select...</option><option>Critical</option><option>High</option><option>Medium</option><option>Low</option></select></div><div class="form-group span2"><label>Title</label><input type="text" id="m-title" placeholder="Brief incident title"></div><div class="form-group span2"><label>Description</label><textarea id="m-desc" placeholder="Detailed description..."></textarea></div><div class="form-group"><label>System/Module</label><input type="text" id="m-system" placeholder="e.g. Trading Engine"></div><div class="form-group"><label>Reporter</label><input type="text" id="m-reporter"></div><div class="form-group"><label>Assigned To</label><input type="text" id="m-assigned"></div><div class="form-group"><label>Ticket Ref</label><input type="text" id="m-ticket" placeholder="e.g. JIRA-123"></div><div class="form-group"><label>Status</label><select id="m-status"><option>Open</option><option>In Progress</option><option>Resolved</option></select></div><div class="form-group"><label>Resolution Date</label><input type="date" id="m-resdate"></div><div class="form-group span2"><label>Resolution Notes</label><textarea id="m-resnotes" placeholder="How was it resolved?"></textarea></div><div class="form-group"><label>MTTR (hours)</label><input type="number" id="m-mttr" placeholder="0" min="0" step="0.5"></div></div><div class="form-actions"><button class="btn" id="btn-inc-cancel" style="background:var(--card2);border:1px solid var(--border);color:var(--text)">Cancel</button><button class="btn btn-primary" id="btn-inc-save">Save Incident</button></div></div></div>
+<div class="modal-bg" id="del-modal"><div class="modal"><h2 id="del-modal-title">Add Delivery</h2><div class="form-grid"><div class="form-group"><label>Client</label><select id="dm-client"><option value="">Select...</option></select></div><div class="form-group"><label>Category</label><select id="dm-cat"><option>Feature</option><option>Bug Fix</option><option>Enhancement</option><option>Configuration</option><option>Integration</option><option>Other</option></select></div><div class="form-group span2"><label>Title</label><input type="text" id="dm-title" placeholder="What was promised"></div><div class="form-group span2"><label>Description</label><textarea id="dm-desc" placeholder="Details..."></textarea></div><div class="form-group"><label>Promised Date</label><input type="date" id="dm-promised"></div><div class="form-group"><label>Actual Date</label><input type="date" id="dm-actual"></div><div class="form-group"><label>Assigned To</label><input type="text" id="dm-assigned"></div><div class="form-group"><label>Status</label><select id="dm-status"><option>Pending</option><option>In Progress</option><option>Delivered</option></select></div><div class="form-group span2"><label>Notes</label><textarea id="dm-notes" placeholder="Additional notes..."></textarea></div></div><div class="form-actions"><button class="btn" id="btn-del-cancel" style="background:var(--card2);border:1px solid var(--border);color:var(--text)">Cancel</button><button class="btn btn-primary" id="btn-del-save">Save Delivery</button></div></div></div>
 <script>
-var CLIENTS = ["Accenture","Albourne","All Weather Capital","Ares Management","Ariel","Asgard Capital","ATL Capital","Ativo Capital Management","Axiom Partners","Azimuth Capital","Balyasny","Black Eagle Capital","Blackrock","Bloom Tree","Bluebell Asset Management","BNP Paribas","Bramshill Investments","Bridgewater Associates","Caledonian","Capstone","Cardinal Capital","CFM","Citadel","Citadel Global Fixed Income","Citadel Wellington","ClariVein","Clement Capital","Coatue","Comac Capital","Corovar Capital","Crabel Capital","Cubist","Cypress Capital","D.E. Shaw","Dawn Capital","DDML","Deutsche Bank","DRW Cumberland","Dunn Capital","Eagle Creek Capital","Ellerston Capital","Empyrean Capital","Epsilon Asset Management","eQ Asset Management","Equinox","Exane BNP Paribas","ExodusPoint","Falcon Edge","FISA","Freestone Grove Partners","Fullerton","G2 Investment Partners","Garda Capital Partners","Global Endowment Management","GMO","GoldenTree","Gracie Point","Graham Capital","Greenfield Acquisition","GSA Capital","Guosen Securities","H2O Asset Management","Haidar Capital","Hammer Capital","Harbourvest Partners","HarbourVest Partners","Highbridge","Howard Weil","Infinitum Asset Management","Infracore Capital","Integrated Capital","Ionic Capital","IronShore Capital","Isam","ISS","Jana Partners","JPMorgan","KBC Group","KeyBridge Capital","Key Square Capital","Kingstown Capital","Kyma Capital","LMR Partners","Lugard Road Capital","Man Group","Marcho Partners","Marshall Wace","Mesirow Financial","Millennium","Morgan Stanley","Nephila Capital","Nexus Capital","Nomura","Norges Bank","Nuveen","Oak Hill Advisors","OFI Asset Management","Orion Mine Finance","Oxford Asset Management","Paladin Asset Management","PGGM Investments","Point72","Quoniam Asset Management","Robeco","Rothschild","RWC","S&P Capital IQ","Sabre88","Saratoga Investment","Schroders","Segantii","Serengeti Asset Management","Silvercrest","Silver Point Capital","Slalom Capital","Sparta Capital","SQM Research","State Street","Stelac Advisory Services","Stieven Financial","Symmetry Investments","Tower Research","TPG","Ubiquant","UBS","Voya","Warwick Business School","Wellington Management","WG Trading","Winton Group","Woodlands Capital","WorldQuant","York Capital","Zimmer Partners"];
-var incidents = JSON.parse(localStorage.getItem("ts_incidents") || "[]");
-var deliveries = JSON.parse(localStorage.getItem("ts_deliveries") || "[]");
-var editIncId = null;
-var editDelId = null;
-var trendChart = null;
-var clientTrendChart = null;
-var envChart = null;
-var priChart = null;
-var monthChart = null;
-function save(){localStorage.setItem("ts_incidents",JSON.stringify(incidents));localStorage.setItem("ts_deliveries",JSON.stringify(deliveries));var el=document.getElementById("last-saved");if(el)el.textContent="Saved: "+new Date().toLocaleTimeString();}
+var CLIENTS=["Accenture","Albourne","All Weather Capital","Ares Management","Ariel","Asgard Capital","ATL Capital","Ativo Capital Management","Axiom Partners","Azimuth Capital","Balyasny","Black Eagle Capital","Blackrock","Bloom Tree","Bluebell Asset Management","BNP Paribas","Bramshill Investments","Bridgewater Associates","Caledonian","Capstone","Cardinal Capital","CFM","Citadel","Citadel Global Fixed Income","Citadel Wellington","ClariVein","Clement Capital","Coatue","Comac Capital","Corovar Capital","Crabel Capital","Cubist","Cypress Capital","D.E. Shaw","Dawn Capital","DDML","Deutsche Bank","DRW Cumberland","Dunn Capital","Eagle Creek Capital","Ellerston Capital","Empyrean Capital","Epsilon Asset Management","eQ Asset Management","Equinox","Exane BNP Paribas","ExodusPoint","Falcon Edge","FISA","Freestone Grove Partners","Fullerton","G2 Investment Partners","Garda Capital Partners","Global Endowment Management","GMO","GoldenTree","Gracie Point","Graham Capital","Greenfield Acquisition","GSA Capital","Guosen Securities","H2O Asset Management","Haidar Capital","Hammer Capital","Harbourvest Partners","HarbourVest Partners","Highbridge","Howard Weil","Infinitum Asset Management","Infracore Capital","Integrated Capital","Ionic Capital","IronShore Capital","Isam","ISS","Jana Partners","JPMorgan","KBC Group","KeyBridge Capital","Key Square Capital","Kingstown Capital","Kyma Capital","LMR Partners","Lugard Road Capital","Man Group","Marcho Partners","Marshall Wace","Mesirow Financial","Millennium","Morgan Stanley","Nephila Capital","Nexus Capital","Nomura","Norges Bank","Nuveen","Oak Hill Advisors","OFI Asset Management","Orion Mine Finance","Oxford Asset Management","Paladin Asset Management","PGGM Investments","Point72","Quoniam Asset Management","Robeco","Rothschild","RWC","S&P Capital IQ","Sabre88","Saratoga Investment","Schroders","Segantii","Serengeti Asset Management","Silvercrest","Silver Point Capital","Slalom Capital","Sparta Capital","SQM Research","State Street","Stelac Advisory Services","Stieven Financial","Symmetry Investments","Tower Research","TPG","Ubiquant","UBS","Voya","Warwick Business School","Wellington Management","WG Trading","Winton Group","Woodlands Capital","WorldQuant","York Capital","Zimmer Partners"];
+var incidents=JSON.parse(localStorage.getItem("ts_inc")||"[]");
+var deliveries=JSON.parse(localStorage.getItem("ts_del")||"[]");
+var editIncId=null,editDelId=null,selClient="";
+function save(){localStorage.setItem("ts_inc",JSON.stringify(incidents));localStorage.setItem("ts_del",JSON.stringify(deliveries));var el=document.getElementById("last-saved");if(el)el.textContent="Saved "+new Date().toLocaleTimeString();}
 function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2);}
 function gv(id){var e=document.getElementById(id);return e?e.value:"";}
 function sv(id,v){var e=document.getElementById(id);if(e)e.value=v||"";}
-function fmt(dt){if(!dt)return"-";var d=new Date(dt);return d.toLocaleDateString("en-GB",{day:"2-digit",month:"short",year:"2-digit"});}
-function fmtDT(dt){if(!dt)return"-";var d=new Date(dt);return d.toLocaleDateString("en-GB",{day:"2-digit",month:"short",year:"2-digit"})+" "+d.toLocaleTimeString("en-GB",{hour:"2-digit",minute:"2-digit"});}
-function isOverdue(d){if(!d.promisedDate)return false;if(d.status==="Delivered")return false;return new Date(d.promisedDate)<new Date();}
-function badgePri(p){var m={"Critical":"b-crit","High":"b-high","Medium":"b-med","Low":"b-low"};return'<span class="badge '+(m[p]||"b-low")+'">'+(p||"-")+'</span>';}
-function badgeEnv(e){var m={"Production":"b-prod","Whiteboard":"b-wb","Both":"b-both"};return'<span class="badge '+(m[e]||"b-low")+'">'+(e||"-")+'</span>';}
-function badgeSt(s){var m={"Open":"b-open","In Progress":"b-prog","Resolved":"b-res"};return'<span class="badge '+(m[s]||"b-low")+'">'+(s||"-")+'</span>';}
-function badgeDSt(s){if(!s)return"-";var m={"Pending":"b-pend","In Progress":"b-prog","Delivered":"b-del","Overdue":"b-over"};return'<span class="badge '+(m[s]||"b-low")+'">'+s+'</span>';}
-function esc(s){return String(s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");}
-function populateSelects(){
-  var ids=["fi-client","m-client","dm-client","fd-client"];
-  ids.forEach(function(id){
-    var el=document.getElementById(id); if(!el)return;
-    var cur=el.value;
-    el.innerHTML='<option value="">'+(id.startsWith("fi")||id.startsWith("fd")?"All Clients":"Select client...")+"</option>";
-    CLIENTS.forEach(function(c){var o=document.createElement("option");o.value=c;o.textContent=c;el.appendChild(o);});
-    if(cur)el.value=cur;
-  });
-}
-function renderIncidents(){
-  var fc=gv("fi-client"),fe=gv("fi-env"),fs=gv("fi-status"),fp=gv("fi-priority");
-  var rows=incidents.filter(function(i){
-    return (!fc||i.client===fc)&&(!fe||i.env===fe)&&(!fs||i.status===fs)&&(!fp||i.priority===fp);
-  });
-  rows.sort(function(a,b){return new Date(b.datetime)-new Date(a.datetime);});
-  var tb=document.getElementById("inc-tbody"); if(!tb)return;
-  if(!rows.length){tb.innerHTML='<tr><td colspan="9"><div class="empty">No incidents logged yet. Click + Log Incident to get started.</div></td></tr>';return;}
-  tb.innerHTML=rows.map(function(i){
-    return "<tr>"+
-      "<td>"+fmtDT(i.datetime)+"</td>"+
-      "<td>"+esc(i.client)+"</td>"+
-      "<td>"+badgeEnv(i.env)+"</td>"+
-      "<td>"+badgePri(i.priority)+"</td>"+
-      "<td style='max-width:200px'>"+esc(i.title)+"</td>"+
-      "<td>"+badgeSt(i.status)+"</td>"+
-      "<td>"+esc(i.assignedTo||"-")+"</td>"+
-      "<td>"+(i.mttr||"-")+"</td>"+
-      "<td><button class='btn btn-sm' style='color:var(--accent);background:rgba(20,184,166,.1);border:1px solid rgba(20,184,166,.3);margin-right:4px' onclick='editInc(\""+i.id+"\")'>Edit</button>"+
-      "<button class='btn btn-sm btn-danger' onclick='delInc(\""+i.id+"\")'>Del</button></td>"+
-      "</tr>";
-  }).join("");
-}
-function renderDeliveries(){
-  var fc=gv("fd-client"),fs=gv("fd-status"),fq=gv("fd-search").toLowerCase();
-  var rows=deliveries.filter(function(d){
-    var over=isOverdue(d);
-    var st=over?"Overdue":d.status;
-    return (!fc||d.client===fc)&&(!fs||st===fs)&&(!fq||d.title.toLowerCase().includes(fq)||d.client.toLowerCase().includes(fq));
-  });
-  rows.sort(function(a,b){return new Date(a.promisedDate)-new Date(b.promisedDate);});
-  var tb=document.getElementById("del-tbody"); if(!tb)return;
-  if(!rows.length){tb.innerHTML='<tr><td colspan="8"><div class="empty">No deliveries tracked yet. Click + Add Delivery to get started.</div></td></tr>';return;}
-  tb.innerHTML=rows.map(function(d){
-    var over=isOverdue(d);
-    var st=over?"Overdue":d.status;
-    return "<tr>"+
-      "<td>"+esc(d.client)+"</td>"+
-      "<td>"+esc(d.category||"-")+"</td>"+
-      "<td>"+esc(d.title)+"</td>"+
-      "<td style='"+(over?"color:var(--err)":"")+"'">"+fmt(d.promisedDate)+"</td>"+
-      "<td>"+fmt(d.actualDate)+"</td>"+
-      "<td>"+esc(d.assignedTo||"-")+"</td>"+
-      "<td>"+badgeDSt(st)+"</td>"+
-      "<td><button class='btn btn-sm' style='color:var(--accent);background:rgba(20,184,166,.1);border:1px solid rgba(20,184,166,.3);margin-right:4px' onclick='editDel(\""+d.id+"\")'>Edit</button>"+
-      "<button class='btn btn-sm btn-danger' onclick='delDel(\""+d.id+"\")'>Del</button></td>"+
-      "</tr>";
-  }).join("");
-}
-function renderKPIs(){
-  var total=incidents.length;
-  var open=incidents.filter(function(i){return i.status==="Open";}).length;
-  var prog=incidents.filter(function(i){return i.status==="In Progress";}).length;
-  var res=incidents.filter(function(i){return i.status==="Resolved";}).length;
-  var crit=incidents.filter(function(i){return i.status!=="Resolved"&&i.priority==="Critical";}).length;
-  var prod=incidents.filter(function(i){return i.env==="Production"||i.env==="Both";}).length;
-  var mttrArr=incidents.filter(function(i){return i.mttr&&parseFloat(i.mttr)>0;}).map(function(i){return parseFloat(i.mttr);});
-  var avgMttr=mttrArr.length?( mttrArr.reduce(function(a,b){return a+b;},0)/mttrArr.length).toFixed(1):"N/A";
-  var openDel=deliveries.filter(function(d){return d.status!=="Delivered";}).length;
-  var overDel=deliveries.filter(function(d){return isOverdue(d);}).length;
-  var g=document.getElementById("kpi-grid"); if(!g)return;
-  g.innerHTML=[
-    {l:"Total Incidents",v:total,c:""},
-    {l:"Open",v:open,c:"err"},
-    {l:"In Progress",v:prog,c:"warn"},
-    {l:"Resolved",v:res,c:"ok"},
-    {l:"Critical Open",v:crit,c:crit>0?"err":"ok"},
-    {l:"Avg MTTR (hrs)",v:avgMttr,c:""},
-    {l:"Production Incidents",v:prod,c:""},
-    {l:"Open Deliveries",v:openDel,c:openDel>0?"warn":"ok"},
-    {l:"Overdue Deliveries",v:overDel,c:overDel>0?"err":"ok"}
-  ].map(function(k){return '<div class="kpi"><div class="label">'+k.l+'</div><div class="val'+(k.c?" "+k.c:"")+'">'+k.v+'</div></div>';}).join("");
-}
-var CHART_COLORS={grid:"rgba(42,58,92,.4)",text:"#8497b8",accent:"#14b8a6",accent2:"#22d3ee",ok:"#22c55e",warn:"#fbbf24",err:"#f87171",med:"#a78bfa"};
-Chart.defaults.color=CHART_COLORS.text;
-Chart.defaults.borderColor=CHART_COLORS.grid;
-function mkChart(id,type,data,opts){
-  var el=document.getElementById(id); if(!el)return null;
-  var existing=Chart.getChart(el); if(existing)existing.destroy();
-  return new Chart(el,{type:type,data:data,options:Object.assign({responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{color:CHART_COLORS.text,boxWidth:12}}}},opts||{})});
-}
-function renderCharts(){
-  var envCounts={Production:0,Whiteboard:0,Both:0};
-  incidents.forEach(function(i){if(envCounts[i.env]!==undefined)envCounts[i.env]++;});
-  envChart=mkChart("chart-env","doughnut",{
-    labels:["Production","Whiteboard","Both"],
-    datasets:[{data:[envCounts.Production,envCounts.Whiteboard,envCounts.Both],
-      backgroundColor:["rgba(20,184,166,.7)","rgba(34,211,238,.7)","rgba(251,191,36,.7)"],
-      borderColor:["#14b8a6","#22d3ee","#fbbf24"],borderWidth:1}]
-  });
-  var priCounts={Critical:0,High:0,Medium:0,Low:0};
-  incidents.forEach(function(i){if(priCounts[i.priority]!==undefined)priCounts[i.priority]++;});
-  priChart=mkChart("chart-pri","doughnut",{
-    labels:["Critical","High","Medium","Low"],
-    datasets:[{data:[priCounts.Critical,priCounts.High,priCounts.Medium,priCounts.Low],
-      backgroundColor:["rgba(248,113,113,.7)","rgba(251,191,36,.7)","rgba(20,184,166,.7)","rgba(132,151,184,.7)"],
-      borderColor:["#f87171","#fbbf24","#14b8a6","#8497b8"],borderWidth:1}]
-  });
-  var now=new Date(),months=[],labels=[];
-  for(var m=5;m>=0;m--){var d=new Date(now.getFullYear(),now.getMonth()-m,1);months.push(d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0"));labels.push(d.toLocaleDateString("en-GB",{month:"short",year:"2-digit"}));}
-  var mCounts=months.map(function(ym){return incidents.filter(function(i){return i.datetime&&i.datetime.startsWith(ym);}).length;});
-  monthChart=mkChart("chart-monthly","bar",{
-    labels:labels,
-    datasets:[{label:"Incidents",data:mCounts,backgroundColor:"rgba(20,184,166,.5)",borderColor:"#14b8a6",borderWidth:1,borderRadius:4}]
-  },{scales:{x:{grid:{color:CHART_COLORS.grid}},y:{grid:{color:CHART_COLORS.grid},beginAtZero:true,ticks:{stepSize:1}}}});
-  var tCounts=months.map(function(ym){return incidents.filter(function(i){return i.datetime&&i.datetime.startsWith(ym);}).length;});
-  if(trendChart)trendChart.destroy();
-  trendChart=mkChart("chart-overall","line",{
-    labels:labels,
-    datasets:[{label:"Total Incidents",data:tCounts,borderColor:"#14b8a6",backgroundColor:"rgba(20,184,166,.1)",tension:.3,fill:true,pointBackgroundColor:"#14b8a6"}]
-  },{scales:{x:{grid:{color:CHART_COLORS.grid}},y:{grid:{color:CHART_COLORS.grid},beginAtZero:true,ticks:{stepSize:1}}}});
-}
-var selectedTrendClient="";
-function renderTrendSel(){
-  var sel=document.getElementById("trend-sel"); if(!sel)return;
-  var active=incidents.map(function(i){return i.client;}).filter(function(v,i,a){return a.indexOf(v)===i;}).sort();
-  if(!active.length){sel.innerHTML='<span style="color:var(--muted);font-size:.8rem">No incidents logged yet - add incidents to see client trends</span>';return;}
-  if(!selectedTrendClient&&active.length)selectedTrendClient=active[0];
-  sel.innerHTML=active.map(function(c){return '<button data-client="'+esc(c)+'" class="'+(c===selectedTrendClient?"active":"")+'">'+esc(c)+'</button>';}).join("");
-  sel.querySelectorAll("button").forEach(function(btn){btn.addEventListener("click",function(){selectedTrendClient=this.dataset.client;renderTrendSel();renderClientTrend();});});
-}
-function renderClientTrend(){
-  var now=new Date(),months=[],labels=[];
-  for(var m=5;m>=0;m--){var d=new Date(now.getFullYear(),now.getMonth()-m,1);months.push(d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0"));labels.push(d.toLocaleDateString("en-GB",{month:"short",year:"2-digit"}));}
-  var counts=months.map(function(ym){return incidents.filter(function(i){return i.client===selectedTrendClient&&i.datetime&&i.datetime.startsWith(ym);}).length;});
-  if(clientTrendChart)clientTrendChart.destroy();
-  clientTrendChart=mkChart("chart-client-trend","line",{
-    labels:labels,
-    datasets:[{label:selectedTrendClient||"Client",data:counts,borderColor:"#22d3ee",backgroundColor:"rgba(34,211,238,.1)",tension:.3,fill:true,pointBackgroundColor:"#22d3ee"}]
-  },{scales:{x:{grid:{color:CHART_COLORS.grid}},y:{grid:{color:CHART_COLORS.grid},beginAtZero:true,ticks:{stepSize:1}}}});
-}
-function renderClients(){
-  var q=gv("client-search").toLowerCase();
-  var g=document.getElementById("client-grid"); if(!g)return;
-  var list=CLIENTS.filter(function(c){return !q||c.toLowerCase().includes(q);});
-  g.innerHTML=list.map(function(c){
-    var ci=incidents.filter(function(i){return i.client===c;});
-    var cd=deliveries.filter(function(d){return d.client===c;});
-    var opn=ci.filter(function(i){return i.status==="Open";}).length;
-    var ovd=cd.filter(function(d){return isOverdue(d);}).length;
-    return '<div class="client-card"><div class="name">'+esc(c)+'</div><div class="stats">'+
-      '<div class="stat">Incidents: <span>'+ci.length+'</span></div>'+ 
-      '<div class="stat">Open: <span style="color:'+(opn>0?"var(--err)":"var(--ok)")+'">'+opn+'</span></div>'+ 
-      '<div class="stat">Deliveries: <span>'+cd.length+'</span></div>'+ 
-      '<div class="stat">Overdue: <span style="color:'+(ovd>0?"var(--err)":"var(--ok)")+'">'+ovd+'</span></div>'+ 
-      '</div></div>';
-  }).join("");
-}
-function openIncModal(id){
-  var modal=document.getElementById("inc-modal");
-  var title=document.getElementById("inc-modal-title");
-  if(id){
-    var inc=incidents.find(function(i){return i.id===id;});
-    if(!inc)return;
-    editIncId=id;
-    if(title)title.textContent="Edit Incident";
-    sv("m-client",inc.client);sv("m-datetime",inc.datetime);sv("m-env",inc.env);
-    sv("m-priority",inc.priority);sv("m-title",inc.title);sv("m-desc",inc.description);
-    sv("m-system",inc.system);sv("m-reporter",inc.reporter);sv("m-assigned",inc.assignedTo);
-    sv("m-ticket",inc.ticket);sv("m-status",inc.status);sv("m-resdate",inc.resDate);
-    sv("m-resnotes",inc.resNotes);sv("m-mttr",inc.mttr);
-  } else {
-    editIncId=null;
-    if(title)title.textContent="Log New Incident";
-    ["m-client","m-datetime","m-env","m-priority","m-title","m-desc","m-system","m-reporter","m-assigned","m-ticket","m-resdate","m-resnotes","m-mttr"].forEach(function(id){sv(id,"");});
-    sv("m-status","Open");
-    var now=new Date(); var local=new Date(now-now.getTimezoneOffset()*60000).toISOString().slice(0,16);
-    sv("m-datetime",local);
-  }
-  modal.classList.add("open");
-}
+function esc(s){return String(s||"").split("&").join("&amp;").split("<").join("&lt;").split(">").join("&gt;");}
+function fmt(d){if(!d)return"-";return new Date(d).toLocaleDateString("en-GB",{day:"2-digit",month:"short",year:"2-digit"});}
+function fmtDT(d){if(!d)return"-";var dt=new Date(d);return dt.toLocaleDateString("en-GB",{day:"2-digit",month:"short",year:"2-digit"})+" "+dt.toLocaleTimeString("en-GB",{hour:"2-digit",minute:"2-digit"});}
+function isOver(d){return d.promisedDate&&d.status!=="Delivered"&&new Date(d.promisedDate)<new Date();}
+function mkBadge(text,cls){var s=document.createElement("span");s.className="badge "+cls;s.textContent=text;return s;}
+function priBadge(p){var m={Critical:"b-crit",High:"b-high",Medium:"b-med",Low:"b-low"};return mkBadge(p||"-",m[p]||"b-low");}
+function envBadge(e){var m={Production:"b-prod",Whiteboard:"b-wb",Both:"b-both"};return mkBadge(e||"-",m[e]||"b-low");}
+function stBadge(s){var m={Open:"b-open","In Progress":"b-prog",Resolved:"b-res"};return mkBadge(s||"-",m[s]||"b-low");}
+function dstBadge(s){var m={Pending:"b-pend","In Progress":"b-prog",Delivered:"b-del",Overdue:"b-over"};return mkBadge(s||"-",m[s]||"b-pend");}
+function mkTd(content,style){var td=document.createElement("td");if(style)td.style.cssText=style;if(typeof content==="string"||typeof content==="number")td.textContent=content;else if(content&&content.nodeType)td.appendChild(content);return td;}
+function mkBtn(text,cls,dataId,dataType){var b=document.createElement("button");b.className="btn btn-sm"+cls;b.textContent=text;b.dataset.id=dataId;b.dataset.type=dataType;return b;}
+function populateSelects(){var ids=["fi-client","m-client","dm-client","fd-client"];ids.forEach(function(id){var el=document.getElementById(id);if(!el)return;var cur=el.value,isFilter=id.startsWith("fi")||id.startsWith("fd");while(el.options.length>1)el.remove(1);if(el.options.length===0){var o=document.createElement("option");o.value="";o.textContent=isFilter?"All Clients":"Select...";el.appendChild(o);}CLIENTS.forEach(function(c){var o=document.createElement("option");o.value=c;o.textContent=c;el.appendChild(o);});if(cur)el.value=cur;});}
+function renderIncidents(){var fc=gv("fi-client"),fe=gv("fi-env"),fs=gv("fi-status"),fp=gv("fi-priority");var rows=incidents.filter(function(i){return(!fc||i.client===fc)&&(!fe||i.env===fe)&&(!fs||i.status===fs)&&(!fp||i.priority===fp);});rows.sort(function(a,b){return new Date(b.datetime)-new Date(a.datetime);});var tb=document.getElementById("inc-tbody");if(!tb)return;while(tb.firstChild)tb.removeChild(tb.firstChild);if(!rows.length){var tr=document.createElement("tr"),td=document.createElement("td");td.colSpan=9;td.className="empty";td.textContent="No incidents yet. Click + Log Incident.";tr.appendChild(td);tb.appendChild(tr);return;}rows.forEach(function(i){var tr=document.createElement("tr");tr.appendChild(mkTd(fmtDT(i.datetime)));tr.appendChild(mkTd(i.client||"-"));var etd=document.createElement("td");etd.appendChild(envBadge(i.env));tr.appendChild(etd);var ptd=document.createElement("td");ptd.appendChild(priBadge(i.priority));tr.appendChild(ptd);tr.appendChild(mkTd(i.title||"-","max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap"));var std=document.createElement("td");std.appendChild(stBadge(i.status));tr.appendChild(std);tr.appendChild(mkTd(i.assignedTo||"-"));tr.appendChild(mkTd(i.mttr||"-"));var atd=document.createElement("td");var eb=mkBtn("Edit"," ",i.id,"inc-edit");eb.style.cssText="color:var(--accent);background:rgba(20,184,166,.1);border:1px solid rgba(20,184,166,.3);margin-right:4px";var db=mkBtn("Del"," btn-danger",i.id,"inc-del");atd.appendChild(eb);atd.appendChild(db);tr.appendChild(atd);tb.appendChild(tr);});}
+function renderDeliveries(){var fc=gv("fd-client"),fs=gv("fd-status"),fq=gv("fd-search").toLowerCase();var rows=deliveries.filter(function(d){var over=isOver(d),st=over?"Overdue":d.status;return(!fc||d.client===fc)&&(!fs||st===fs)&&(!fq||d.title.toLowerCase().includes(fq)||d.client.toLowerCase().includes(fq));});rows.sort(function(a,b){return new Date(a.promisedDate)-new Date(b.promisedDate);});var tb=document.getElementById("del-tbody");if(!tb)return;while(tb.firstChild)tb.removeChild(tb.firstChild);if(!rows.length){var tr=document.createElement("tr"),td=document.createElement("td");td.colSpan=8;td.className="empty";td.textContent="No deliveries yet. Click + Add Delivery.";tr.appendChild(td);tb.appendChild(tr);return;}rows.forEach(function(d){var over=isOver(d),st=over?"Overdue":d.status;var tr=document.createElement("tr");tr.appendChild(mkTd(d.client||"-"));tr.appendChild(mkTd(d.category||"-"));tr.appendChild(mkTd(d.title||"-"));var ptd=mkTd(fmt(d.promisedDate));if(over)ptd.style.color="var(--err)";tr.appendChild(ptd);tr.appendChild(mkTd(fmt(d.actualDate)));tr.appendChild(mkTd(d.assignedTo||"-"));var stTd=document.createElement("td");stTd.appendChild(dstBadge(st));tr.appendChild(stTd);var atd=document.createElement("td");var eb=mkBtn("Edit"," ",d.id,"del-edit");eb.style.cssText="color:var(--accent);background:rgba(20,184,166,.1);border:1px solid rgba(20,184,166,.3);margin-right:4px";var db=mkBtn("Del"," btn-danger",d.id,"del-del");atd.appendChild(eb);atd.appendChild(db);tr.appendChild(atd);tb.appendChild(tr);});}
+function renderKPIs(){var total=incidents.length,open=0,prog=0,res=0,crit=0,prod=0;incidents.forEach(function(i){if(i.status==="Open")open++;else if(i.status==="In Progress")prog++;else if(i.status==="Resolved")res++;if(i.status!=="Resolved"&&i.priority==="Critical")crit++;if(i.env==="Production"||i.env==="Both")prod++;});var mtArr=incidents.filter(function(i){return i.mttr&&parseFloat(i.mttr)>0;}).map(function(i){return parseFloat(i.mttr);});var avgMt=mtArr.length?(mtArr.reduce(function(a,b){return a+b;},0)/mtArr.length).toFixed(1):"N/A";var openDel=deliveries.filter(function(d){return d.status!=="Delivered";}).length;var overDel=deliveries.filter(function(d){return isOver(d);}).length;var g=document.getElementById("kpi-grid");if(!g)return;while(g.firstChild)g.removeChild(g.firstChild);[{l:"Total Incidents",v:total,c:""},{l:"Open",v:open,c:"err"},{l:"In Progress",v:prog,c:"warn"},{l:"Resolved",v:res,c:"ok"},{l:"Critical Open",v:crit,c:crit>0?"err":"ok"},{l:"Avg MTTR (h)",v:avgMt,c:""},{l:"Production",v:prod,c:""},{l:"Open Deliveries",v:openDel,c:openDel>0?"warn":"ok"},{l:"Overdue Del.",v:overDel,c:overDel>0?"err":"ok"}].forEach(function(k){var d=document.createElement("div");d.className="kpi";var lbl=document.createElement("div");lbl.className="label";lbl.textContent=k.l;var val=document.createElement("div");val.className="val"+(k.c?" "+k.c:"");val.textContent=k.v;d.appendChild(lbl);d.appendChild(val);g.appendChild(d);});}
+var CC={g:"rgba(42,58,92,.4)",t:"#8497b8"};
+if(window.Chart){Chart.defaults.color=CC.t;Chart.defaults.borderColor=CC.g;}
+function mkChart(id,type,data,opts){var el=document.getElementById(id);if(!el||!window.Chart)return;var ex=Chart.getChart(el);if(ex)ex.destroy();return new Chart(el,{type:type,data:data,options:Object.assign({responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{color:CC.t,boxWidth:12}}}},opts||{})});}
+function getMonths(){var now=new Date(),months=[],labels=[];for(var m=5;m>=0;m--){var d=new Date(now.getFullYear(),now.getMonth()-m,1);months.push(d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0"));labels.push(d.toLocaleDateString("en-GB",{month:"short",year:"2-digit"}));}return{months:months,labels:labels};}
+function renderCharts(){var eC={Production:0,Whiteboard:0,Both:0};incidents.forEach(function(i){if(eC[i.env]!==undefined)eC[i.env]++;});mkChart("chart-env","doughnut",{labels:["Production","Whiteboard","Both"],datasets:[{data:[eC.Production,eC.Whiteboard,eC.Both],backgroundColor:["rgba(20,184,166,.7)","rgba(34,211,238,.7)","rgba(251,191,36,.7)"],borderColor:["#14b8a6","#22d3ee","#fbbf24"],borderWidth:1}]});var pC={Critical:0,High:0,Medium:0,Low:0};incidents.forEach(function(i){if(pC[i.priority]!==undefined)pC[i.priority]++;});mkChart("chart-pri","doughnut",{labels:["Critical","High","Medium","Low"],datasets:[{data:[pC.Critical,pC.High,pC.Medium,pC.Low],backgroundColor:["rgba(248,113,113,.7)","rgba(251,191,36,.7)","rgba(20,184,166,.7)","rgba(132,151,184,.7)"],borderColor:["#f87171","#fbbf24","#14b8a6","#8497b8"],borderWidth:1}]});var ml=getMonths();var mC=ml.months.map(function(ym){return incidents.filter(function(i){return i.datetime&&i.datetime.startsWith(ym);}).length;});mkChart("chart-monthly","bar",{labels:ml.labels,datasets:[{label:"Incidents",data:mC,backgroundColor:"rgba(20,184,166,.5)",borderColor:"#14b8a6",borderWidth:1,borderRadius:4}]},{scales:{x:{grid:{color:CC.g}},y:{grid:{color:CC.g},beginAtZero:true,ticks:{stepSize:1}}}});var ml2=getMonths();var tC=ml2.months.map(function(ym){return incidents.filter(function(i){return i.datetime&&i.datetime.startsWith(ym);}).length;});mkChart("chart-overall","line",{labels:ml2.labels,datasets:[{label:"Total",data:tC,borderColor:"#14b8a6",backgroundColor:"rgba(20,184,166,.1)",tension:.3,fill:true,pointBackgroundColor:"#14b8a6"}]},{scales:{x:{grid:{color:CC.g}},y:{grid:{color:CC.g},beginAtZero:true,ticks:{stepSize:1}}}});}
+function renderTrendSel(){var sel=document.getElementById("trend-sel");if(!sel)return;var active=incidents.map(function(i){return i.client;}).filter(function(v,i,a){return a.indexOf(v)===i;}).sort();while(sel.firstChild)sel.removeChild(sel.firstChild);if(!active.length){var sp=document.createElement("span");sp.style.cssText="color:var(--muted);font-size:.8rem";sp.textContent="No incidents logged yet.";sel.appendChild(sp);return;}if(!selClient||active.indexOf(selClient)===-1)selClient=active[0];active.forEach(function(c){var btn=document.createElement("button");btn.textContent=c;btn.dataset.client=c;if(c===selClient)btn.classList.add("active");btn.addEventListener("click",function(){selClient=this.dataset.client;renderTrendSel();renderClientTrend();});sel.appendChild(btn);});}
+function renderClientTrend(){var ml=getMonths();var counts=ml.months.map(function(ym){return incidents.filter(function(i){return i.client===selClient&&i.datetime&&i.datetime.startsWith(ym);}).length;});mkChart("chart-ct","line",{labels:ml.labels,datasets:[{label:selClient||"Client",data:counts,borderColor:"#22d3ee",backgroundColor:"rgba(34,211,238,.1)",tension:.3,fill:true,pointBackgroundColor:"#22d3ee"}]},{scales:{x:{grid:{color:CC.g}},y:{grid:{color:CC.g},beginAtZero:true,ticks:{stepSize:1}}}});}
+function renderClients(){var q=gv("client-search").toLowerCase();var g=document.getElementById("client-grid");if(!g)return;while(g.firstChild)g.removeChild(g.firstChild);CLIENTS.forEach(function(c){if(q&&!c.toLowerCase().includes(q))return;var ci=incidents.filter(function(i){return i.client===c;});var cd=deliveries.filter(function(d){return d.client===c;});var opn=ci.filter(function(i){return i.status==="Open";}).length;var ovd=cd.filter(function(d){return isOver(d);}).length;var card=document.createElement("div");card.className="client-card";var nm=document.createElement("div");nm.className="name";nm.textContent=c;var stats=document.createElement("div");stats.className="stats";function mkStat(label,val,color){var d=document.createElement("div");d.className="stat";d.textContent=label+": ";var sp=document.createElement("span");sp.textContent=val;if(color)sp.style.color=color;d.appendChild(sp);return d;}stats.appendChild(mkStat("Incidents",ci.length,null));stats.appendChild(mkStat("Open",opn,opn>0?"var(--err)":"var(--ok)"));stats.appendChild(mkStat("Deliveries",cd.length,null));stats.appendChild(mkStat("Overdue",ovd,ovd>0?"var(--err)":"var(--ok)"));card.appendChild(nm);card.appendChild(stats);g.appendChild(card);});}
+function openIncModal(id){var modal=document.getElementById("inc-modal");var title=document.getElementById("inc-modal-title");if(id){var inc=null;for(var k=0;k<incidents.length;k++){if(incidents[k].id===id){inc=incidents[k];break;}}if(!inc)return;editIncId=id;if(title)title.textContent="Edit Incident";sv("m-client",inc.client);sv("m-datetime",inc.datetime);sv("m-env",inc.env);sv("m-priority",inc.priority);sv("m-title",inc.title);sv("m-desc",inc.description||"");sv("m-system",inc.system||"");sv("m-reporter",inc.reporter||"");sv("m-assigned",inc.assignedTo||"");sv("m-ticket",inc.ticket||"");sv("m-status",inc.status);sv("m-resdate",inc.resDate||"");sv("m-resnotes",inc.resNotes||"");sv("m-mttr",inc.mttr||"");}else{editIncId=null;if(title)title.textContent="Log New Incident";["m-client","m-env","m-priority","m-title","m-desc","m-system","m-reporter","m-assigned","m-ticket","m-resdate","m-resnotes","m-mttr"].forEach(function(i){sv(i,"");});sv("m-status","Open");var now=new Date();sv("m-datetime",new Date(now-now.getTimezoneOffset()*60000).toISOString().slice(0,16));}modal.classList.add("open");}
 function closeIncModal(){document.getElementById("inc-modal").classList.remove("open");}
-function saveInc(){
-  var client=gv("m-client"),datetime=gv("m-datetime"),env=gv("m-env"),priority=gv("m-priority"),title=gv("m-title");
-  if(!client){alert("Please select a client.");return;}
-  if(!datetime){alert("Please set the date and time.");return;}
-  if(!env){alert("Please select an environment.");return;}
-  if(!priority){alert("Please select a priority.");return;}
-  if(!title.trim()){alert("Please enter an incident title.");return;}
-  var data={id:editIncId||uid(),client:client,datetime:datetime,env:env,priority:priority,
-    title:title.trim(),description:gv("m-desc"),system:gv("m-system"),reporter:gv("m-reporter"),
-    assignedTo:gv("m-assigned"),ticket:gv("m-ticket"),status:gv("m-status"),
-    resDate:gv("m-resdate"),resNotes:gv("m-resnotes"),mttr:gv("m-mttr")};
-  if(editIncId){var idx=incidents.findIndex(function(i){return i.id===editIncId;});if(idx>-1)incidents[idx]=data;}
-  else{incidents.push(data);}
-  save();closeIncModal();renderAll();
-}
-function editInc(id){openIncModal(id);}
-function delInc(id){if(confirm("Delete this incident?")){{incidents=incidents.filter(function(i){return i.id!==id;});save();renderAll();}}
-}
-function openDelModal(id){
-  var modal=document.getElementById("del-modal");
-  var title=document.getElementById("del-modal-title");
-  if(id){
-    var del=deliveries.find(function(d){return d.id===id;});
-    if(!del)return;
-    editDelId=id;
-    if(title)title.textContent="Edit Delivery";
-    sv("dm-client",del.client);sv("dm-category",del.category);sv("dm-title",del.title);
-    sv("dm-desc",del.description);sv("dm-promised",del.promisedDate);sv("dm-actual",del.actualDate);
-    sv("dm-assigned",del.assignedTo);sv("dm-status",del.status);sv("dm-notes",del.notes);
-  } else {
-    editDelId=null;
-    if(title)title.textContent="Add Delivery Commitment";
-    ["dm-client","dm-title","dm-desc","dm-promised","dm-actual","dm-assigned","dm-notes"].forEach(function(id){sv(id,"");});
-    sv("dm-category","Feature");sv("dm-status","Pending");
-  }
-  modal.classList.add("open");
-}
+function saveInc(){var client=gv("m-client"),dt=gv("m-datetime"),env=gv("m-env"),pri=gv("m-priority"),ttl=gv("m-title");if(!client){alert("Please select a client.");return;}if(!dt){alert("Please set date and time.");return;}if(!env){alert("Please select environment.");return;}if(!pri){alert("Please select priority.");return;}if(!ttl.trim()){alert("Please enter a title.");return;}var data={id:editIncId||uid(),client:client,datetime:dt,env:env,priority:pri,title:ttl.trim(),description:gv("m-desc"),system:gv("m-system"),reporter:gv("m-reporter"),assignedTo:gv("m-assigned"),ticket:gv("m-ticket"),status:gv("m-status"),resDate:gv("m-resdate"),resNotes:gv("m-resnotes"),mttr:gv("m-mttr")};if(editIncId){for(var i=0;i<incidents.length;i++){if(incidents[i].id===editIncId){incidents[i]=data;break;}}}else incidents.push(data);save();closeIncModal();renderAll();}
+function openDelModal(id){var modal=document.getElementById("del-modal");var title=document.getElementById("del-modal-title");if(id){var del=null;for(var k=0;k<deliveries.length;k++){if(deliveries[k].id===id){del=deliveries[k];break;}}if(!del)return;editDelId=id;if(title)title.textContent="Edit Delivery";sv("dm-client",del.client);sv("dm-cat",del.category||"Feature");sv("dm-title",del.title);sv("dm-desc",del.description||"");sv("dm-promised",del.promisedDate);sv("dm-actual",del.actualDate||"");sv("dm-assigned",del.assignedTo||"");sv("dm-status",del.status);sv("dm-notes",del.notes||"");}else{editDelId=null;if(title)title.textContent="Add Delivery Commitment";["dm-client","dm-title","dm-desc","dm-promised","dm-actual","dm-assigned","dm-notes"].forEach(function(i){sv(i,"");});sv("dm-cat","Feature");sv("dm-status","Pending");}modal.classList.add("open");}
 function closeDelModal(){document.getElementById("del-modal").classList.remove("open");}
-function saveDel(){
-  var client=gv("dm-client"),title=gv("dm-title"),promised=gv("dm-promised");
-  if(!client){alert("Please select a client.");return;}
-  if(!title.trim()){alert("Please enter a delivery title.");return;}
-  if(!promised){alert("Please set a promised date.");return;}
-  var data={id:editDelId||uid(),client:client,category:gv("dm-category"),title:title.trim(),
-    description:gv("dm-desc"),promisedDate:promised,actualDate:gv("dm-actual"),
-    assignedTo:gv("dm-assigned"),status:gv("dm-status"),notes:gv("dm-notes")};
-  if(editDelId){var idx=deliveries.findIndex(function(d){return d.id===editDelId;});if(idx>-1)deliveries[idx]=data;}
-  else{deliveries.push(data);}
-  save();closeDelModal();renderAll();
-}
-function editDel(id){openDelModal(id);}
-function delDel(id){if(confirm("Delete this delivery?")){{deliveries=deliveries.filter(function(d){return d.id!==id;});save();renderAll();}}
-}
-function renderAll(){
-  renderKPIs();
-  renderIncidents();
-  renderDeliveries();
-  renderCharts();
-  renderTrendSel();
-  renderClientTrend();
-  renderClients();
-}
-function initApp(){
-  // Navigation
-  var navBtns=document.querySelectorAll("#main-nav button");
-  var pages=document.querySelectorAll(".page");
-  navBtns.forEach(function(btn){
-    btn.addEventListener("click",function(){
-      var pg=this.dataset.page;
-      navBtns.forEach(function(b){b.classList.remove("active");});
-      pages.forEach(function(p){p.classList.remove("active");});
-      this.classList.add("active");
-      var target=document.getElementById("page-"+pg);
-      if(target)target.classList.add("active");
-      if(pg==="trends"){renderTrendSel();renderClientTrend();}
-      if(pg==="clients")renderClients();
-    });
-  });
-  // Button events
-  var btnAddInc=document.getElementById("btn-add-inc");
-  if(btnAddInc)btnAddInc.addEventListener("click",function(){openIncModal(null);});
-  var btnAddDel=document.getElementById("btn-add-del");
-  if(btnAddDel)btnAddDel.addEventListener("click",function(){openDelModal(null);});
-  var btnIncCancel=document.getElementById("btn-inc-cancel");
-  if(btnIncCancel)btnIncCancel.addEventListener("click",closeIncModal);
-  var btnIncSave=document.getElementById("btn-inc-save");
-  if(btnIncSave)btnIncSave.addEventListener("click",saveInc);
-  var btnDelCancel=document.getElementById("btn-del-cancel");
-  if(btnDelCancel)btnDelCancel.addEventListener("click",closeDelModal);
-  var btnDelSave=document.getElementById("btn-del-save");
-  if(btnDelSave)btnDelSave.addEventListener("click",saveDel);
-  // Filter events
-  ["fi-client","fi-env","fi-status","fi-priority"].forEach(function(id){
-    var el=document.getElementById(id);
-    if(el)el.addEventListener("change",renderIncidents);
-  });
-  ["fd-client","fd-status"].forEach(function(id){
-    var el=document.getElementById(id);
-    if(el)el.addEventListener("change",renderDeliveries);
-  });
-  var fdSearch=document.getElementById("fd-search");
-  if(fdSearch)fdSearch.addEventListener("input",renderDeliveries);
-  var clientSearch=document.getElementById("client-search");
-  if(clientSearch)clientSearch.addEventListener("input",renderClients);
-  // Clear filter buttons
-  var btnClearI=document.getElementById("btn-clear-ifilter");
-  if(btnClearI)btnClearI.addEventListener("click",function(){
-    ["fi-client","fi-env","fi-status","fi-priority"].forEach(function(id){sv(id,"");});
-    renderIncidents();
-  });
-  var btnClearD=document.getElementById("btn-clear-dfilter");
-  if(btnClearD)btnClearD.addEventListener("click",function(){
-    ["fd-client","fd-status","fd-search"].forEach(function(id){sv(id,"");});
-    renderDeliveries();
-  });
-  // Close modals on bg click
-  document.getElementById("inc-modal").addEventListener("click",function(e){if(e.target===this)closeIncModal();});
-  document.getElementById("del-modal").addEventListener("click",function(e){if(e.target===this)closeDelModal();});
-  populateSelects();
-  renderAll();
-}
+function saveDel(){var client=gv("dm-client"),ttl=gv("dm-title"),promised=gv("dm-promised");if(!client){alert("Please select a client.");return;}if(!ttl.trim()){alert("Please enter a title.");return;}if(!promised){alert("Please set promised date.");return;}var data={id:editDelId||uid(),client:client,category:gv("dm-cat"),title:ttl.trim(),description:gv("dm-desc"),promisedDate:promised,actualDate:gv("dm-actual"),assignedTo:gv("dm-assigned"),status:gv("dm-status"),notes:gv("dm-notes")};if(editDelId){for(var i=0;i<deliveries.length;i++){if(deliveries[i].id===editDelId){deliveries[i]=data;break;}}}else deliveries.push(data);save();closeDelModal();renderAll();}
+function renderAll(){renderKPIs();renderIncidents();renderDeliveries();renderCharts();}
+function initApp(){var navBtns=document.querySelectorAll("#main-nav button");var pages=document.querySelectorAll(".page");navBtns.forEach(function(btn){btn.addEventListener("click",function(){var pg=this.dataset.page;navBtns.forEach(function(b){b.classList.remove("active");});pages.forEach(function(p){p.classList.remove("active");});this.classList.add("active");var target=document.getElementById("page-"+pg);if(target)target.classList.add("active");if(pg==="trends"){renderTrendSel();renderClientTrend();}if(pg==="clients")renderClients();});});function on(id,fn){var el=document.getElementById(id);if(el)el.addEventListener("click",fn);}on("btn-add-inc",function(){openIncModal(null);});on("btn-add-del",function(){openDelModal(null);});on("btn-inc-cancel",closeIncModal);on("btn-inc-save",saveInc);on("btn-del-cancel",closeDelModal);on("btn-del-save",saveDel);on("btn-clear-if",function(){["fi-client","fi-env","fi-status","fi-priority"].forEach(function(id){sv(id,"");});renderIncidents();});on("btn-clear-df",function(){sv("fd-client","");sv("fd-status","");sv("fd-search","");renderDeliveries();});function onCh(id,fn){var el=document.getElementById(id);if(el)el.addEventListener("change",fn);}onCh("fi-client",renderIncidents);onCh("fi-env",renderIncidents);onCh("fi-status",renderIncidents);onCh("fi-priority",renderIncidents);onCh("fd-client",renderDeliveries);onCh("fd-status",renderDeliveries);var fds=document.getElementById("fd-search");if(fds)fds.addEventListener("input",renderDeliveries);var cs=document.getElementById("client-search");if(cs)cs.addEventListener("input",renderClients);var im=document.getElementById("inc-modal");if(im)im.addEventListener("click",function(e){if(e.target===im)closeIncModal();});var dm=document.getElementById("del-modal");if(dm)dm.addEventListener("click",function(e){if(e.target===dm)closeDelModal();});document.addEventListener("click",function(e){var btn=e.target.closest("[data-type]");if(!btn)return;var type=btn.dataset.type,id=btn.dataset.id;if(type==="inc-edit")openIncModal(id);else if(type==="inc-del"){if(confirm("Delete this incident?")){incidents=incidents.filter(function(i){return i.id!==id;});save();renderAll();}}else if(type==="del-edit")openDelModal(id);else if(type==="del-del"){if(confirm("Delete this delivery?")){deliveries=deliveries.filter(function(d){return d.id!==id;});save();renderAll();}}});populateSelects();renderAll();}
 document.addEventListener("DOMContentLoaded",initApp);
 </script>
 </body>
